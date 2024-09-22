@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/botlab/twv/common"
-	"github.com/botlab/twv/node"
-	"github.com/botlab/twv/stats"
+	"github.com/botlabpro/twv/common"
+	"github.com/botlabpro/twv/node"
+	"github.com/botlabpro/twv/stats"
 	"github.com/gin-gonic/gin"
 )
 

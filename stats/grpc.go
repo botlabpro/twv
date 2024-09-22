@@ -2,7 +2,7 @@ package stats
 
 import (
 	"context"
-	"github.com/botlab/twv/node"
+	"github.com/botlabpro/twv/node"
 	api "github.com/sagernet/sing-box/experimental/v2rayapi"
 	"google.golang.org/grpc"
 	"time"

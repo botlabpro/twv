@@ -3,7 +3,7 @@ package common
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/botlab/twv/node"
+	"github.com/botlabpro/twv/node"
 	"log"
 	"os"
 )
