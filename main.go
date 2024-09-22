@@ -4,6 +4,7 @@ import (
 	"github.com/botlabpro/twv/common"
 	"github.com/botlabpro/twv/node"
 	"github.com/botlabpro/twv/stats"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
@@ -17,6 +18,9 @@ func main() {
 	stats.Init(allNodes)
 
 	router := gin.Default()
+
+	router.Use(cors.Default())
+
 	router.GET("/nodes", func(context *gin.Context) {
 		context.JSON(200, allNodes)
 	})
