@@ -25,7 +25,7 @@ func main() {
 		context.JSON(200, allNodes)
 	})
 
-	if err := router.Run(":8080"); err != nil {
+	if err := router.RunTLS(":8080", "ssl.pem", "ssl.key"); err != nil {
 		panic(err)
 	}
 	/*for {
