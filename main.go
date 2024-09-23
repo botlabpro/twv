@@ -6,6 +6,7 @@ import (
 	"github.com/botlabpro/twv/stats"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"regexp"
 )
 
 func main() {
@@ -22,7 +23,13 @@ func main() {
 	router.Use(cors.Default())
 
 	router.GET("/nodes", func(context *gin.Context) {
-		context.JSON(200, allNodes)
+		var ns []node.Node
+		for _, n := range allNodes {
+			nn := *n
+			nn.Ip = maskLastOctet(nn.Ip)
+			ns = append(ns, nn)
+		}
+		context.JSON(200, ns)
 	})
 
 	if err := router.Run(":8080"); err != nil {
@@ -36,4 +43,10 @@ func main() {
 		fmt.Println(strings.Join(info, " "))
 		time.Sleep(time.Second)
 	}*/
+}
+
+func maskLastOctet(ip string) string {
+	re := regexp.MustCompile(`(\d+)\.(\d+)\.(\d+)\.(\d+)`)
+	maskedIP := re.ReplaceAllString(ip, "$1.$2.$3.**")
+	return maskedIP
 }
