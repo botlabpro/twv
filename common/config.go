@@ -9,7 +9,8 @@ import (
 )
 
 type Config struct {
-	Nodes []*node.BaseNode `json:"nodes"`
+	Nodes   []*node.BaseNode `json:"nodes"`
+	FakeIPs []string         `json:"fakeIPs"`
 }
 
 func LoadConfig(file string) *Config {

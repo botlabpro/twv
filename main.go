@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/botlabpro/twv/common"
+	"github.com/botlabpro/twv/fake_traffic"
 	"github.com/botlabpro/twv/node"
 	"github.com/botlabpro/twv/stats"
 	"github.com/gin-contrib/cors"
@@ -17,6 +18,8 @@ func main() {
 	}
 
 	stats.Init(allNodes)
+
+	go fake_traffic.Run(config.FakeIPs)
 
 	router := gin.Default()
 
