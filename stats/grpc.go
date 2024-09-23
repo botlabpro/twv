@@ -30,10 +30,15 @@ func Init(nodes []*node.Node) {
 
 func (s *Service) run() {
 	for {
-		s.Node.InboundOut = s.getStats("inbound>>>vppl_proxy>>>traffic>>>uplink")
-		s.Node.InboundIn = s.getStats("inbound>>>vppl_proxy>>>traffic>>>downlink")
-		s.Node.OutboundOut = s.getStats("inbound>>>vppl>>>traffic>>>uplink") + s.getStats("inbound>>>vless>>>traffic>>>uplink")
-		s.Node.OutboundIn = s.getStats("inbound>>>vppl>>>traffic>>>downlink") + s.getStats("inbound>>>vless>>>traffic>>>downlink")
+		inboundOut := s.getStats("inbound>>>vppl_proxy>>>traffic>>>uplink")
+		inboundIn := s.getStats("inbound>>>vppl_proxy>>>traffic>>>downlink")
+		outboundOut := s.getStats("inbound>>>vppl>>>traffic>>>uplink") + s.getStats("inbound>>>vless>>>traffic>>>uplink")
+		outboundIn := s.getStats("inbound>>>vppl>>>traffic>>>downlink") + s.getStats("inbound>>>vless>>>traffic>>>downlink")
+		s.Node.InboundIn = inboundIn
+		s.Node.InboundOut = inboundOut
+		s.Node.OutboundIn = outboundIn
+		s.Node.OutboundOut = outboundOut
+		s.Node.AddTraffic(inboundIn + inboundOut + outboundOut + outboundIn)
 		sysStats := s.getSysStats()
 		if sysStats != nil {
 			s.Node.Online = true
