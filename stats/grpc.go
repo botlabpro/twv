@@ -34,14 +34,13 @@ func (s *Service) run() {
 		inboundIn := s.getStats("inbound>>>vppl_proxy>>>traffic>>>downlink")
 		outboundOut := s.getStats("inbound>>>vppl>>>traffic>>>uplink") + s.getStats("inbound>>>vless>>>traffic>>>uplink")
 		outboundIn := s.getStats("inbound>>>vppl>>>traffic>>>downlink") + s.getStats("inbound>>>vless>>>traffic>>>downlink")
-		s.Node.AddTraffic(inboundIn +
-			inboundOut +
-			outboundOut +
-			outboundIn -
-			s.Node.InboundIn -
-			s.Node.InboundOut -
-			s.Node.OutboundIn -
-			s.Node.OutboundOut)
+		oldTraffic := s.Node.InboundIn + s.Node.InboundOut + s.Node.OutboundIn + s.Node.OutboundOut
+		newTraffic := inboundIn + inboundOut + outboundIn + outboundOut
+		if newTraffic > oldTraffic {
+			s.Node.AddTraffic(newTraffic - oldTraffic)
+		} else {
+			s.Node.AddTraffic(0)
+		}
 		s.Node.InboundIn = inboundIn
 		s.Node.InboundOut = inboundOut
 		s.Node.OutboundIn = outboundIn
